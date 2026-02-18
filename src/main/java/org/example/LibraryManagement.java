@@ -22,6 +22,9 @@ public class LibraryManagement {
      }
 
      public String takeBook(long studId, long bookId){
+         if((books.get(bookId) == null))return "Error: Book ID " + bookId + " not found.";
+         else if((students.get(studId) == null))return "Error: Student ID " + studId + " not found.";
+
          if(!books.get(bookId).isAvail()){
              return "The requested book is not available";
          };
@@ -38,6 +41,11 @@ public class LibraryManagement {
      }
 
      public String returnBook(long studId, long bookId){
+         if((books.get(bookId) == null))return "Error: Book ID " + bookId + " not found.";
+         else if((students.get(studId) == null))return "Error: Student ID " + studId + " not found.";
+         else if(books.get(bookId).isAvail())return "Please Enter the Correct Book ID";
+         else if(!students.get(studId).getBorrBooks().containsKey(bookId))return "This Book is not taken by you, Enter the correct Book ID";
+
         long fineSec = 0;
         books.get(bookId).setAvail(true);
         LocalDateTime takeTime = students.get(studId).getBorrBooks().get(bookId);
